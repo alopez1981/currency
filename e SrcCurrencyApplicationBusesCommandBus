@@ -1,0 +1,11 @@
+[90m= [39m[34;4mIlluminate\Support\Collection[39;24m {#5157
+    [34mall[39m: [
+      {#5155
+        +"[1mcode[22m": "[32mEUR[39m",
+      },
+      {#5165
+        +"[1mcode[22m": "[32mUSD[39m",
+      },
+    ],
+  }
+

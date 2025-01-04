@@ -1,0 +1,21 @@
+[90m= [39m[34;4mIlluminate\Support\Collection[39;24m {#5159
+    [34mall[39m: [
+      {#5148
+        +"[1mid[22m": [35m1[39m,
+        +"[1mbase_currency[22m": "[32mEUR[39m",
+        +"[1mtarget_currency[22m": "[32mEUR[39m",
+        +"[1mrate[22m": "[32m1.000000[39m",
+        +"[1mcreated_at[22m": [36mnull[39m,
+        +"[1mupdated_at[22m": "[32m2025-01-03 15:58:46[39m",
+      },
+      {#5150
+        +"[1mid[22m": [35m2[39m,
+        +"[1mbase_currency[22m": "[32mEUR[39m",
+        +"[1mtarget_currency[22m": "[32mUSD[39m",
+        +"[1mrate[22m": "[32m1.028024[39m",
+        +"[1mcreated_at[22m": [36mnull[39m,
+        +"[1mupdated_at[22m": "[32m2025-01-03 15:58:46[39m",
+      },
+    ],
+  }
+
