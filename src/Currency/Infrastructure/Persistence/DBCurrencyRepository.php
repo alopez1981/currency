@@ -12,15 +12,10 @@ class DBCurrencyRepository implements CurrencyRepositoryInterface
 {
     public function getAll(): array
     {
-        $currencies = DB::table("currencies")
+        $currencies = DB::table('currencies')
             ->select('code')
             ->get();
 
-        // Verificar el mapeo
-        dd($currencies->map(fn($currency) => new BaseCurrency($currency->code))->toArray());
-
-        return $currencies
-            ->map(fn($currency) => new BaseCurrency($currency->code))
-            ->toArray();
+        return $currencies->map(fn($currency) => new BaseCurrency($currency->code))->toArray();
     }
 }

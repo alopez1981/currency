@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Src\Currency\Application\Buses\QueryBus;
 use Src\Currency\Application\Queries\GetRateConversionQuery;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class RateConversionController extends Controller
         $this->queryBus = $queryBus;
     }
 
-    public function convert(Request $request): array
+    public function convert(Request $request): JsonResponse
     {
         $validated = $request->validate([
             'from' => 'required|string',
@@ -28,6 +29,9 @@ class RateConversionController extends Controller
             $validated['to'],
             (float)$validated['amount']
         );
-        return $this->queryBus->dispatch($query);
+        $response = $this->queryBus->dispatch($query);
+        return response()->json([
+            'data' => $response,
+        ], 200);
     }
 }

@@ -21,6 +21,9 @@ class CurrenciesController extends Controller
    {
        $currencies = $this->queryBus->dispatch(new GetCurrenciesQuery());
 
-       return response()->json($currencies, 200);
+       return response()->json([
+           'data' => $currencies,
+       ], 200);
+
    }
 }

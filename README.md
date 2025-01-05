@@ -1,66 +1,158 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Currency Management API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Descripción
+La **Currency Management API** es una aplicación diseñada para gestionar tasas de cambio entre monedas, utilizando principios de arquitectura hexagonal, DDD (Domain-Driven Design) y CQRS (Command Query Responsibility Segregation). Esta API interactúa con la API externa Fixer para obtener tasas de cambio actualizadas y permite consultar conversiones, listar monedas disponibles y registrar el historial de cambios.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## **Características principales**
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Endpoints disponibles
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. **Listar monedas disponibles**
+    - **Método:** `GET`
+    - **URL:** `/api/currencies`
+    - **Descripción:** Retorna una lista de monedas disponibles.
+    - **Respuesta de ejemplo:**
+      ```json
+      [
+          {"code": "USD", "name": "US Dollar"},
+          {"code": "EUR", "name": "Euro"}
+      ]
+      ```
 
-## Learning Laravel
+2. **Conversión de tasas de cambio**
+    - **Método:** `POST`
+    - **URL:** `/api/currencies/rate-conversion`
+    - **Descripción:** Calcula la conversión entre dos monedas para una cantidad específica.
+    - **Parámetros requeridos:**
+      ```json
+      {
+          "from": "USD",
+          "to": "EUR",
+          "amount": 100
+      }
+      ```
+    - **Respuesta de ejemplo:**
+      ```json
+      {
+          "from": "USD",
+          "to": "EUR",
+          "amount": 100,
+          "result": 85.00
+      }
+      ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+3. **Actualizar tasas de cambio**
+    - **Método:** Interno (Command `UpdateRatesCommand`)
+    - **Descripción:** Actualiza las tasas de cambio en la base de datos y registra el historial de cambios.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## **Tecnologías utilizadas**
 
-## Laravel Sponsors
+- **Framework:** Laravel
+- **API externa:** [Fixer API](https://fixer.io/)
+- **Base de datos:** MySQL
+- **Herramientas adicionales:**
+    - Mailhog (para pruebas de envío de correos)
+    - Git (para control de versiones)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## **Estructura del proyecto**
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Capas principales
 
-## Contributing
+1. **Dominio (Domain):**
+    - Contiene las entidades y las interfaces de repositorios.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+2. **Aplicación (Application):**
+    - Contiene casos de uso, comandos, queries y sus handlers.
 
-## Code of Conduct
+3. **Infraestructura (Infrastructure):**
+    - Contiene las implementaciones de repositorios y adaptadores para servicios externos.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## **Cómo ejecutar el proyecto**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Requisitos previos
+- PHP 8.1+
+- Composer
+- MySQL
+- Mailhog (para pruebas de correo)
 
-## License
+### Pasos
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+1. **Clonar el repositorio:**
+   ```bash
+   git clone https://github.com/alopez1981/currency.git
+   cd tu-repositorio
+   ```
+
+2. **Instalar dependencias:**
+   ```bash
+   composer install
+   ```
+
+3. **Configurar el archivo `.env`:**
+   ```env
+   FIXER_API_KEY=tu_clave_de_api
+   FIXER_API_URL=https://data.fixer.io/api/latest
+   DB_DATABASE=currency_management
+   DB_USERNAME=tu_usuario
+   DB_PASSWORD=tu_contraseña
+   MAIL_HOST=mailhog
+   MAIL_PORT=1025
+   ```
+
+4. **Ejecutar migraciones:**
+   ```bash
+   php artisan migrate
+   ```
+
+5. **Ejecutar el servidor:**
+   ```bash
+   php artisan serve
+   ```
+
+6. **Iniciar Mailhog:**
+   ```bash
+   docker run -d -p 8025:8025 -p 1025:1025 mailhog/mailhog
+   ```
+    - Accede a Mailhog en: [http://localhost:8025](http://localhost:8025)
+
+---
+
+## **Pruebas**
+
+### Pruebas unitarias
+Ejecuta las pruebas unitarias usando PHPUnit:
+```bash
+php artisan test
+```
+
+### Pruebas de endpoints
+- Usa herramientas como Postman o cURL para probar los endpoints de la API.
+
+---
+
+## **Contribuciones**
+
+1. Crea una rama para tus cambios:
+   ```bash
+   git checkout -b feature/nueva-funcionalidad
+   ```
+2. Realiza los cambios y sube la rama:
+   ```bash
+   git add .
+   git commit -m "Descripción de los cambios"
+   git push origin feature/nueva-funcionalidad
+   ```
+3. Abre un Pull Request en GitHub.
+
+---
+
+## **Licencia**
+Este proyecto está bajo la licencia MIT. Para más detalles, consulta el archivo [LICENSE](LICENSE).

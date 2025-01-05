@@ -35,15 +35,15 @@ class UpdateRatesService
         $currencies = $this->currencyRepository->getAll();
             foreach ($currencies as $currency) {
 
-                if ($currency->getCode()->getCode() !== $baseCurrency->getCode()) {
+                if ($currency->getCode() !== $baseCurrency->getCode()) {
 
                     $rate = $this->exchangeRateProvider->getRate(
                         $baseCurrency->getCode(),
-                        $currency->getCode()->getCode()
+                        $currency->getCode()
                     );
                     $this->rateRepository->updateOrInsertRate(
                         $baseCurrency->getCode(),
-                        $currency->getCode()->getCode(),
+                        $currency->getCode(),
                         $rate
                     );
                     $rateHistory = new RateHistory(
