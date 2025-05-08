@@ -21,6 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('currencies')->group(function () {
-    Route::get('/', [CurrenciesController::class, 'index']); // Lista de divisas
-    Route::get('/rate-conversion', [RateConversionController::class, 'convert']); // Conversión de divisas
+    Route::get('/', [CurrenciesController::class, 'index']); 
+    Route::get('/rate-conversion', [RateConversionController::class, 'convert']); 
 });
